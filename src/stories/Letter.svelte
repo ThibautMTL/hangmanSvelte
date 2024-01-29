@@ -1,7 +1,7 @@
 <script lang="ts">
 	import CorrectIcon from './../icons/CorrectIcon.svelte';
 	import WrongIcon from './../icons/WrongIcon.svelte';
-	import './Letter.scss';
+	import './letter.scss';
 	import { fade, draw, fly } from 'svelte/transition';
 
 	export let key: string;
@@ -18,7 +18,11 @@
 </script>
 
 <button on:click={handleClick} class="key">
-	<div class="relative grid place-content-center w-9 h-9">
+	<div
+		class="relative grid place-content-center w-9 h-9 transition-all {state === 'default'
+			? 'hover:scale-110 hover:rotate-6'
+			: ''} "
+	>
 		<span class="relative w-full uppercase title-1">{key}</span>
 		<div class="svg svg--{state} absolute w-full h-full">
 			{#if state === 'wrong'}

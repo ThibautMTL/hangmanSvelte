@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Key from '../stories/Letter.svelte';
-	import Letter from './Letter.svelte';
+	import SecretLetter from '../stories/SecretLetter.svelte';
 	import Draw from './Draw.svelte';
 
 	// data from +page.server.ts
@@ -63,32 +63,17 @@
 <button on:click={() => fault++}>Add fault</button>
 <p>Fault: {fault}</p>
 
-<div class="keyboard">
+<p>Secret word: {secretWord}</p>
+<p>Category: {category}</p>
+<div class="flex flex-wrap justify-center items-center gap-3">
+	{#each guestWord as letter, index (index)}
+		<SecretLetter letter={letter.value} bind:guessed={letter.guessed} />
+	{/each}
+</div>
+<button on:click={resetGame}>Reset</button>
+
+<div class="flex flex-wrap justify-center">
 	{#each alphabet.split('') as letter}
 		<Key key={letter} on:keyPressed={keyPressed} />
 	{/each}
 </div>
-
-<div id="guestWord">
-	{#each guestWord as letter, index (index)}
-		<Letter bind:letter {index} on:letterPressed={reveal} />
-	{/each}
-</div>
-<button on:click={resetGame}>Reset</button>
-<p>Secret word: {secretWord}</p>
-<p>Category: {category}</p>
-
-<style>
-	.keyboard {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
-	}
-	#guestWord {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
-		align-items: center;
-		gap: 40px;
-	}
-</style>
