@@ -58,8 +58,6 @@
 	}
 </script>
 
-<h1>Hangman</h1>
-
 <Draw bind:fault />
 
 <button on:click={() => fault++}>Add fault</button>
@@ -67,7 +65,7 @@
 
 <div class="keyboard">
 	{#each alphabet.split('') as letter}
-		<Key key={letter} disabled={false} on:keyPressed={keyPressed} />
+		<Key key={letter} on:keyPressed={keyPressed} />
 	{/each}
 </div>
 

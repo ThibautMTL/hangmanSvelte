@@ -16,6 +16,11 @@
 		display: flex;
 		flex-direction: column;
 		min-height: 100vh;
+		background-image: url('../lib/images/bg.jpg');
+		background-repeat: repeat-y;
+		background-size: 100% 100%;
+		background-position: center;
+		background-attachment: fixed;
 	}
 
 	main {

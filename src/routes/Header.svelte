@@ -1,17 +1,11 @@
 <script>
-	import logo from '$lib/images/svelte-logo.svg';
-	import github from '$lib/images/github.svg';
+	import logo from '$lib/images/svelteman-logo.svg';
 </script>
 
 <header>
 	<div class="corner">
 		<a href="https://kit.svelte.dev">
-			<img src={logo} alt="SvelteKit" />
-		</a>
-	</div>
-	<div class="corner">
-		<a href="https://github.com/sveltejs/kit">
-			<img src={github} alt="GitHub" />
+			<img src={logo} alt="SvelteMan" />
 		</a>
 	</div>
 </header>
@@ -20,11 +14,8 @@
 	header {
 		display: flex;
 		justify-content: space-between;
-	}
-
-	.corner {
-		width: 3em;
-		height: 3em;
+		padding: 0px 80px;
+		margin-top: 34px;
 	}
 
 	.corner a {
@@ -36,8 +27,7 @@
 	}
 
 	.corner img {
-		width: 2em;
-		height: 2em;
+		max-width: 160px;
 		object-fit: contain;
 	}
 
