@@ -1,0 +1,21 @@
+<script lang="ts">
+	import { draw } from 'svelte/transition';
+	export let isAnimated = false;
+</script>
+
+<svg
+	width="100%"
+	height="auto"
+	viewBox="0 0 32 32"
+	stroke="currentColor"
+	fill="none"
+	xmlns="http://www.w3.org/2000/svg"
+>
+	<path
+		in:draw={isAnimated ? { duration: 600 } : undefined}
+		d="M4.48204 29.4234C12.6276 31.792 27.266 33.0453 30.3564 21.4349C33.4467 9.82455 24.957 1 14.5442 1C4.54648 1 -0.038166 16.1546 1.19714 21.4349C4.5329 29.5771 21.2524 31.792 30.3564 27.5285"
+		stroke="currentColor"
+		stroke-width="2"
+		stroke-linecap="round"
+	/>
+</svg>

@@ -1,0 +1,10 @@
+.key {
+	.svg {
+		&--wrong {
+			@apply text-red-500;
+		}
+		&--correct {
+			@apply text-green-500;
+		}
+	}
+}
