@@ -1,59 +1,96 @@
-<script>
-	import Counter from './Counter.svelte';
-	import welcome from '$lib/images/svelte-welcome.webp';
-	import welcome_fallback from '$lib/images/svelte-welcome.png';
+<script lang="ts">
+	import Key from '../stories/Letter.svelte';
+	import Letter from './Letter.svelte';
+	import Draw from './Draw.svelte';
+
+	// data from +page.server.ts
+	export let data;
+
+	// secret word random
+	const secretWord = data.name;
+
+	// guest word
+	let guestWord: { value: string; guessed: boolean }[] = Array(secretWord.length).fill({
+		value: '_',
+		guessed: false
+	});
+
+	// category of word
+	const category = data.categorie;
+
+	// all charts in the alphabet
+	const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+
+	//charts enabled
+	const enabled = [];
+
+	//dice rotation
+	const diceRotation = {
+		x: 0,
+		y: 0
+	};
+
+	//fault counter
+	let fault = 0;
+
+	/**
+	 * Display alert with key pressed
+	 */
+	function keyPressed(event: CustomEvent<string>) {
+		alert(event.detail);
+	}
+
+	/**
+	 * Reveal letter
+	 */
+	function reveal(event: CustomEvent<number>) {
+		guestWord[event.detail] = {
+			value: 'X',
+			guessed: true
+		};
+	}
+
+	function resetGame() {
+		guestWord = guestWord.map((letter) => ({
+			guessed: false,
+			value: '_'
+		}));
+	}
 </script>
 
-<svelte:head>
-	<title>Home</title>
-	<meta name="description" content="Svelte demo app" />
-</svelte:head>
+<h1>Hangman</h1>
 
-<section>
-	<h1>
-		<span class="welcome">
-			<picture>
-				<source srcset={welcome} type="image/webp" />
-				<img src={welcome_fallback} alt="Welcome" />
-			</picture>
-		</span>
+<Draw bind:fault />
 
-		to your new<br />SvelteKit app
-	</h1>
+<button on:click={() => fault++}>Add fault</button>
+<p>Fault: {fault}</p>
 
-	<h2>
-		try editing <strong>src/routes/+page.svelte</strong>
-	</h2>
+<div class="keyboard">
+	{#each alphabet.split('') as letter}
+		<Key key={letter} disabled={false} on:keyPressed={keyPressed} />
+	{/each}
+</div>
 
-	<Counter />
-</section>
+<div id="guestWord">
+	{#each guestWord as letter, index (index)}
+		<Letter bind:letter {index} on:letterPressed={reveal} />
+	{/each}
+</div>
+<button on:click={resetGame}>Reset</button>
+<p>Secret word: {secretWord}</p>
+<p>Category: {category}</p>
 
 <style>
-	section {
+	.keyboard {
 		display: flex;
-		flex-direction: column;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+	#guestWord {
+		display: flex;
+		flex-wrap: wrap;
 		justify-content: center;
 		align-items: center;
-		flex: 0.6;
-	}
-
-	h1 {
-		width: 100%;
-	}
-
-	.welcome {
-		display: block;
-		position: relative;
-		width: 100%;
-		height: 0;
-		padding: 0 0 calc(100% * 495 / 2048) 0;
-	}
-
-	.welcome img {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		top: 0;
-		display: block;
+		gap: 40px;
 	}
 </style>
